@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const createuser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email && !password) {
+    const { name,email, password } = req.body;
+    if (!name && !email && !password) {
       res.status(200).send("email and password fields are required");
     } else {
       const userexists = await usermodel.findOne({ email: email });
@@ -14,6 +14,7 @@ const createuser = async (req, res) => {
       } else {
         const encryptpwd = await bcrypt.hash(password, 10);
         const user = await usermodel.create({
+          name:name,
           email: email,
           password: encryptpwd,
         });

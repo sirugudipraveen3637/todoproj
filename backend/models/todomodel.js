@@ -6,10 +6,13 @@ const todoschema = new mongoose.Schema({
     required: [true, "title cannot be empty"],
   },
   tasks: {
-    type: [String],
+    type: [{task:String,status:{type:String,default:"pending"},createdDate:{type:Date,default:Date.now},modifiedDate:{type:Date,default:Date.now}}],
   },
-  createdDate: Date,
-  modifiedDate: Date,
+  createdDate: {type:Date,default:Date.now},
+  modifiedDate: {type:Date,default:Date.now},
+  userid:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model("todomodel", todoschema);

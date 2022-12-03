@@ -3,22 +3,22 @@ const todomodel = require("../models/todomodel");
 
 const createTodo = async (req, res) => {
   try {
-    const { title, tasks, createdDate } = req.body;
+    const { title, tasks, userid } = req.body;
 
-    if (!title) {
-      res.status(200).send("Todo Title is required");
+    if (!(title&&userid)) {
+      res.status(200).send("Title and userid are required");
     } else {
       let todo;
       if (!tasks) {
         todo = await todomodel.create({
           title: title,
-          createdDate: createdDate,
+          userid:userid
         });
       } else {
         todo = await todomodel.create({
           title: title,
           tasks: tasks,
-          createdDate: createdDate,
+          userid:userid
         });
       }
       res.status(200).json({
