@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "cbf4239d-c6f4-441c-84fc-af36699523a7",
+		"name": "todoCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24146552"
+	},
+	"item": [
+		{
+			"name": "APIStatusCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/todo/",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTodo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Life Insurance\",\r\n    \"tasks\":[\"Axis term insurance\",\"Aditya Birla term insurance\"],\r\n    \"createdDate\":\"2022-12-01\",\r\n     \"modifiedDate\":\"2022-12-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/createTodo",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"createTodo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTodos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/todo/getAllTodos/asc",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"getAllTodos",
+						"asc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTodo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/todo/deleteTodo/6387f004aac91ab39c22f49d",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"deleteTodo",
+						"6387f004aac91ab39c22f49d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTodoTasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/todo/getTodoTasks/6387f0634ba05c9a0a3ac232",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"getTodoTasks",
+						"6387f0634ba05c9a0a3ac232"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTodo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"modifiedDate\":\"2022-12-01\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/updateTodo/6387f43c1fcc7f210e5a8a72",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"updateTodo",
+						"6387f43c1fcc7f210e5a8a72"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createuser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"praveen2@gmail.com\",\r\n    \"password\":\"mahi@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/createuser",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"createuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"praveen2@gmail.com\",\r\n    \"password\":\"mahi@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/login",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createAppWriteUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/createawuser",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"createawuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginAppWriteUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"praveen2@gmail.com\",\r\n    \"password\":\"mahi@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/todo/loginaw",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"todo",
+						"loginaw"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
