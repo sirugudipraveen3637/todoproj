@@ -1,10 +1,16 @@
 
 import './App.css';
+import Login from './components/login';
+import Signup from  './components/signup';
+import Todo from './components/todo';
+import Header  from './components/header';
 
 function App() {
   return (
     <div className="App">
-      <h2>TO DO AUTH</h2>
+       <Header></Header> 
+     
+      <Todo></Todo>
     </div>
   );
 }
