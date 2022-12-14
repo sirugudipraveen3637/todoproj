@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios"
-
+import {useNavigate} from 'react-router-dom'
 
 export const Login=()=>
 {
+	const navigte=useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -56,7 +57,7 @@ return(
 				<button type="button" onClick={handleLoginAction} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign in</button>
 			</div>
 			<p className="px-6 text-sm text-center text-gray-600">Don't have an account yet?
-				<a rel="noopener noreferrer" href="#" className="hover:underline text-cyan-600">Sign up</a>.
+				<a rel="noopener noreferrer" href="/signup" className="hover:underline text-cyan-600">Sign up</a>.
 			</p>
 		</div>
 	</form>
