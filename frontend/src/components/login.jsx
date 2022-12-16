@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios"
 import {useNavigate} from 'react-router-dom'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 export const Login=()=>
 {
-	const navigte=useNavigate();
+	const navigate=useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [isopen, setPopup] = useState(false);
 
 	const invokeloginService= async ()=>
 	{
@@ -19,12 +22,21 @@ export const Login=()=>
 		const response= await axios.post("/v1/todo/login",data);
 
 		console.log("response"+JSON.stringify(response));
+
+		if(response.data.success==true)
+		{
+			navigate("/home")
+		}
+		else{
+			setPopup(true);
+		}
 	}
 
 	const handleLoginAction=(event)=>
 	{
 
 		event.preventDefault();
+		
 		invokeloginService();
 
 		setEmail("");
@@ -56,6 +68,14 @@ return(
 			<div>
 				<button type="button" onClick={handleLoginAction} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign in</button>
 			</div>
+			<Popup  open={isopen} modal>
+                  {close =>(
+                  <div>
+                    <h1 className="font-semibold mx-auto">Login failed. Please provide valid credentials</h1>
+                     <button onClick={()=>{setPopup(false);close();}} className="w-22 ml-3 px-1 py-1 mt-2 font-semibold text-sm rounded-md bg-cyan-600 text-gray-50">OK</button> 
+
+                    </div>)}
+                  </Popup>
 			<p className="px-6 text-sm text-center text-gray-600">Don't have an account yet?
 				<a rel="noopener noreferrer" href="/signup" className="hover:underline text-cyan-600">Sign up</a>.
 			</p>

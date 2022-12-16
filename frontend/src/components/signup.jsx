@@ -1,13 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import {useNavigate} from 'react-router-dom'
 function Signup()
 {
-
+	const navigate=useNavigate();
 	const [username, setusername] = useState("");
 	const [email, setemail] = useState("");
 	const [password, setpassword] = useState("");
+	const [isopen, setPopup] = useState(false);
+	const [msg, setmsg] = useState("Account creation is successfull. Please Login");
+	const [btnmsg, setBtnMsg] = useState("Sign In");
+	const [service, setservice] = useState("pass")
 
 async function invokesignupService()
 {
@@ -18,10 +24,29 @@ async function invokesignupService()
 		"password":password
 	}
 
-	const response=axios.post("/v1/todo/createuser",data);
+	const response=await axios.post("/v1/todo/createuser",data);
+	console.log(response.data._id);
 
-	console.log(response);
+	if(response.data._id)
+	{
+		setPopup(true);
+		setmsg("Account creation is successfull. Please Login");
+		setBtnMsg("Sign In");
+		setservice("pass");
+	}
+	else{
+		setPopup(true);
+		setmsg("Account creation failed. Please try after sometime");
+		setBtnMsg("OK");
+		setservice("fail")
+	}
+	
+}
 
+function navigationhandle()
+{
+	//if(service=="pass")
+	navigate("/login")
 }
 
 function signuphandle(event)
@@ -59,8 +84,16 @@ return(<div className="flex flex-col mx-auto my-20 max-w-md p-6 rounded-md sm:p-
 		</div>
 		<div className="space-y-2">
 			<div>
-				<button type="button" onClick={signuphandle} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign Up</button>
+				<button type="button" onClick={(event)=>{signuphandle(event);}} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign Up</button>
 			</div>
+			<Popup  open={isopen} modal>
+                  {close =>(
+                  <div>
+                    <h1 className="font-semibold mx-auto">{msg}</h1>
+                     <button onClick={()=>{setPopup(false);close(); navigationhandle()}} className="w-22 ml-3 px-1 py-1 mt-2 font-semibold text-sm rounded-md bg-cyan-600 text-gray-50">{btnmsg}</button> 
+
+                    </div>)}
+                  </Popup>
 			{/* <p className="px-6 text-sm text-center text-gray-600">Don't have an account yet?
 				<a rel="noopener noreferrer" href="#" className="hover:underline text-cyan-600">Sign up</a>.
 			</p> */}
