@@ -24,7 +24,8 @@ const login= async(req,res)=>
                 res.status(200).cookie("token",token,options).json({
                     success:true,
                     message:"login successful",
-                    id:usercheck._id
+                    id:usercheck._id,
+                    name:usercheck.name
                 })
             }
             else
