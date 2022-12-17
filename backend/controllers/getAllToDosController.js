@@ -4,12 +4,14 @@ const todomodel = require("../models/todomodel");
 const getAllTodos = async (req, res) => {
   try {
     const {sortType}=req.params;
-    todos = await todomodel.find().sort({modifiedDate:sortType});
+    const {userid}=req.query;
+    console.log("userid"+userid)
+    todos = await todomodel.find({userid:userid}).sort({modifiedDate:sortType});
     if (!todos) {
-      res.status(201).send("todo documents are not available");
+      res.status(201).json({todos:[],length:0,message:"todo documents are not available"});
     } else {
       if (todos.length == 0) {
-        res.status(200).send("todo documents are not available");
+        res.status(200).send({todos:[],length:0,message:"todo documents are not available"});
       } else {
         res.status(200).json({
           todos: todos,
