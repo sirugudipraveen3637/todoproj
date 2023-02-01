@@ -1,12 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "./header"
 
 import axios from "axios";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 function Todo() {
+  const location=useLocation();
   const [todos, settodos] = useState([]);
   const [tasks, settasks] = useState([]);
   const [value, setValue] = useState(1);
@@ -53,7 +56,6 @@ function Todo() {
   }
   const updateTodo=async (id,title)=>
   {
-   
      const data={
       title:title
      }
@@ -69,31 +71,38 @@ function Todo() {
    
      const data={
       title:title,
-      "userid":"63951a66b1862ee8e1291a95"
+      "userid":location.state.userid
      }
+
+     console.log("data input params"+JSON.stringify(data))
      const createTodoresponse= await axios.post("v1/todo/createTodo/",data);
 
-     console.log(" todo created  successfully"+createTodoresponse);
+     console.log(" todo created  successfully"+JSON.stringify(createTodoresponse));
 
      setValue(value-1);
   }
 
   const fetchtoDos = async () => {
-    const todoresponse = await axios.get("v1/todo/getAllTodos/desc");
-    if (todoresponse.data.length > 0) {
+    const todoresponse = await axios.get("v1/todo/getAllTodos/desc?userid="+location.state.id);
+    console.log("todoresponse" + JSON.stringify(todoresponse));
+    if (todoresponse.data.todos.length > 0) {
       settodos(todoresponse.data.todos);
       setselid(todoresponse.data.todos[0]._id);
       settasks(todoresponse.data.todos[0].tasks);
     } else console.log("No todos available");
   };
 
-  console.log("todoresponse" + JSON.stringify(todos));
+  console.log("todos" + JSON.stringify(todos));
   return (
-    <div className="flex">
+    <div >
+      <div>
+      <Header username={location.state.name}></Header>
+      </div>
+      <div className="flex">
       <div className="text-left mt-12 ml-12  flex-1">
         <div>
         <label className="my-3 text-3xl font-bold text-cyan-600">Todos</label>
-        <Popup   trigger={<button  className="w-12 ml-3 px-1 py-1 fon9t-semibold text-sm rounded-md bg-cyan-600 text-gray-50">Add </button>} modal>
+        <Popup  trigger={<button  className="w-12 ml-3 px-1 py-1 fon9t-semibold text-sm rounded-md bg-cyan-600 text-gray-50">Add </button>} modal>
                   {close =>(
                   <div>
                     <input placeholder="Todo"  onChange={event=>{settitlevalue(event.target.value)}} className="border border-gray-600 ml-0 pl-2 py-1 border-opacity-90" type="text" />
@@ -106,7 +115,13 @@ function Todo() {
         </div>
         <table className="table">
           <tbody>
-            {todos.map((todo,pos) => (
+            {todos.length == 0 ? (
+              <tr className="pt-3" >
+                <td className="pt-4">
+                  <b>No todos available</b>
+                </td>
+              </tr>
+            ) : todos.map((todo,pos) => (
               
               <tr className="pt-3" key={todo._id}>
                 <td className="pt-4">
@@ -226,6 +241,7 @@ function Todo() {
             )}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

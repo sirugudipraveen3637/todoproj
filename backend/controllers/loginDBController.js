@@ -18,7 +18,7 @@ const login= async(req,res)=>
             const usercheck=await usermodel.findOne({"email":email});
             if(usercheck && await bcrypt.compare(password,usercheck.password))
             {
-                const token=jwt.sign({email,id:usercheck._id},"shhhhh",{expiresIn:"2h"});
+                const token=jwt.sign({email,id:usercheck._id,name:usercheck.name},"shhhhh",{expiresIn:"2h"});
 
                 const options={expires:new Date(Date.now()+900000),httpOnly:true}
                 res.status(200).cookie("token",token,options).json({

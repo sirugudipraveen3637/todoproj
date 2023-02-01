@@ -20,12 +20,10 @@ export const Login=()=>
 		}
 		console.log("data"+JSON.stringify(data));
 		const response= await axios.post("/v1/todo/login",data);
-
-		console.log("response"+JSON.stringify(response));
-
+		
 		if(response.data.success==true)
 		{
-			navigate("/home")
+			navigate("/home",{state:{id:response.data.id,name:response.data.name}})
 		}
 		else{
 			setPopup(true);
@@ -59,7 +57,7 @@ return(
 			<div>
 				<div className="flex justify-between mb-2">
 					<label className="text-sm">Password</label>
-					<a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-600">Forgot password?</a>
+					<a rel="noopener noreferrer" href="/forgotpassword" className="text-xs hover:underline text-gray-600">Forgot password?</a>
 				</div>
 				<input type="password" name="password" id="password" value={password} onChange={event=>{setPassword(event.target.value)}} placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
 			</div>

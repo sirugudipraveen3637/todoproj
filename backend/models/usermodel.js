@@ -14,6 +14,11 @@ const userschema = new mongoose.Schema({
     type: String,
     required: [true, "password is required"],
   },
+  forgotPasswordToken:String,
+  forgotPasswordExpiry:Date
+},
+{
+  timestamps:true
 });
 
 module.exports = mongoose.model("usermodel", userschema);
