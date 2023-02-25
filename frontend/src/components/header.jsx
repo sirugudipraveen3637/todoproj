@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function Header({ username }) {
+function Header({ username,profile }) {
   const navigate = useNavigate();
 
   return (
@@ -10,6 +10,7 @@ function Header({ username }) {
           <h1 className="my-1 text-3xl font-bold text-cyan-600">
             Welcome, {username}
           </h1>
+          <img src={profile} alt="Profile picture" style={{ width: '50px',height:'50px' }}/>
         </div>
 
         <div className="flex items-center md:space-x-4">

@@ -13,7 +13,8 @@ function Signup()
 	const [isopen, setPopup] = useState(false);
 	const [msg, setmsg] = useState("Account creation is successfull. Please Login");
 	const [btnmsg, setBtnMsg] = useState("Sign In");
-	const [service, setservice] = useState("pass")
+	const [service, setservice] = useState("pass");
+	const [selectedFile, setSelectedFile] = useState("");
 
 async function invokesignupService()
 {
@@ -23,8 +24,17 @@ async function invokesignupService()
 		"email":email,
 		"password":password
 	}
+	const formData = new FormData();
+	formData.append("name", username);
+	formData.append("email", email);
+	formData.append("password", password);
+	formData.append("logintype", "manual");
+	formData.append("file", selectedFile,selectedFile.name);
 
-	const response=await axios.post("/v1/todo/createuser",data);
+	console.log(formData);
+
+	const response=await axios.post("/v1/todo/createuser",formData);
+	//{headers: {"Content-Type": "multipart/form-data",},});
 	console.log(response.data._id);
 
 	if(response.data._id)
@@ -64,34 +74,39 @@ return(<div className="flex flex-col mx-auto my-20 max-w-md p-6 rounded-md sm:p-
 		<h1 className="my-3 text-4xl font-bold">Sign Up</h1>
 		<p className="text-sm text-gray-600">Sign up to create your account</p>
 	</div>
-	<form action="" className="space-y-12 ng-untouched ng-pristine ng-valid">
+	<form method="post" onSubmit={signuphandle} className="space-y-12 ng-untouched ng-pristine ng-valid">
 		<div className="space-y-4">
 			<div>
 				<label className="block mb-2 text-sm text-left">Username</label>
-				<input type="text" value={username} onChange={event=>{setusername(event.target.value)}} name="uname" id="uname" placeholder="" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+				<input type="text" value={username} name="username" onChange={event=>{setusername(event.target.value)}} id="uname" placeholder="" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
 			</div>
 			<div>
 				<label className="block mb-2 text-sm text-left">Email address</label>
-				<input type="email" value={email} onChange={event=>{setemail(event.target.value)}} name="email" id="email" placeholder="" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+				<input type="email" value={email} name="email" onChange={event=>{setemail(event.target.value)}} id="email" placeholder="" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
 			</div>
 			<div>
 				<div className="flex justify-between mb-2">
 					<label className="text-sm text-left">Password</label>
 					
 				</div>
-				<input type="password" value={password} onChange={event=>{setpassword(event.target.value)}} name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+				<input type="password" value={password} name="password" onChange={event=>{setpassword(event.target.value)}}  id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+			</div>
+			<div>
+				<label className="block mb-2 text-sm text-left">File Upload</label>
+				<input type="file" name="file"  onChange={(e) => setSelectedFile(e.target.files[0])}  id="file" multiple="multiple" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
 			</div>
 		</div>
 		<div className="space-y-2">
 			<div>
-				<button type="button" onClick={(event)=>{signuphandle(event);}} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign Up</button>
+				{/* <button type="button" onClick={(event)=>{signuphandle(event);}} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign Up</button> */}
+				<input type="submit" value="Submit" className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50"/>
 			</div>
 			<Popup  open={isopen} modal>
                   {close =>(
                   <div>
                     <h1 className="font-semibold mx-auto">{msg}</h1>
                      <button onClick={()=>{setPopup(false);close(); navigationhandle()}} className="w-22 ml-3 px-1 py-1 mt-2 font-semibold text-sm rounded-md bg-cyan-600 text-gray-50">{btnmsg}</button> 
-
+						
                     </div>)}
                   </Popup>
 			{/* <p className="px-6 text-sm text-center text-gray-600">Don't have an account yet?

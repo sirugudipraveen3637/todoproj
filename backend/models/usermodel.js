@@ -11,8 +11,11 @@ const userschema = new mongoose.Schema({
     unique: true,
   },
   password: {
-    type: String,
-    required: [true, "password is required"],
+    type: String
+    //required: [true, "password is required"],
+  },
+  profileurl: {
+    type: String
   },
   forgotPasswordToken:String,
   forgotPasswordExpiry:Date

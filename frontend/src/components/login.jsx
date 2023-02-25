@@ -4,12 +4,17 @@ import {useNavigate} from 'react-router-dom'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
+
 export const Login=()=>
 {
 	const navigate=useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isopen, setPopup] = useState(false);
+	const [providertype, setProvider] = useState("");
+	const [profile, setProfile] = useState();
 
 	const invokeloginService= async ()=>
 	{
@@ -23,11 +28,48 @@ export const Login=()=>
 		
 		if(response.data.success==true)
 		{
-			navigate("/home",{state:{id:response.data.id,name:response.data.name}})
+			navigate("/home",{state:{id:response.data.id,name:response.data.name,profileurl:response.data.profileurl}})
 		}
 		else{
 			setPopup(true);
 		}
+	}
+
+	const googleNav=()=>
+	{
+		navigate("/forgotpassword")
+	}
+
+	async function invokesignupService(providertype,email,name,picture)
+	{
+
+			//console.log(providertype);
+			//console.log(profile);
+			const formData = new FormData();
+			formData.append("name", name);
+			formData.append("email", email);
+			//formData.append("password", password);
+			formData.append("logintype", providertype);
+			formData.append("socialprofileurl", picture);
+			
+			//formData.append("file", selectedFile,selectedFile.name);
+
+			console.log(formData);
+
+			const response=await axios.post("/v1/todo/createuser",formData);
+			//{headers: {"Content-Type": "multipart/form-data",},});
+			console.log(response.data._id);
+			console.log(response)
+			if(response.data._id)
+			{
+				console.log("Account creation is successfull.");
+				navigate("/home",{state:{id:response.data._id,name:response.data.name,profileurl:response.data.profileurl}})
+			}
+			else{
+				setPopup(true);
+				console.log("Account creation failed. Please try after sometime");
+			}
+			
 	}
 
 	const handleLoginAction=(event)=>
@@ -66,6 +108,32 @@ return(
 			<div>
 				<button type="button" onClick={handleLoginAction} className="w-full px-8 py-3 font-semibold rounded-md bg-cyan-600 text-gray-50">Sign in</button>
 			</div>
+			<div>
+				<LoginSocialGoogle
+					//isOnlyGetToken
+					client_id="518207309400-0u26dvkdlj17dmoe3nk46ocdk82sm6hj.apps.googleusercontent.com"
+					scope="openid profile email"
+					//discoveryDocs="claims_supported"
+					//access_type="offline"
+					onResolve={({ provider, data }) => {
+					console.log(provider);
+					console.log(data);
+					console.log(data.email);
+					console.log(data.name);
+					console.log(data.picture);
+					//setProvider("google");
+					//setProfile({email:data.email,name:data.name,picture:data.picture});
+					//console.log(providertype);
+					//console.log(profile)
+					invokesignupService(provider,data.email,data.name,data.picture);
+					}}
+					onReject={(err) => {
+					console.log(err);
+					}}
+				>
+					<GoogleLoginButton />
+				</LoginSocialGoogle>
+    </div>
 			<Popup  open={isopen} modal>
                   {close =>(
                   <div>

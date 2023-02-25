@@ -96,7 +96,7 @@ function Todo() {
   return (
     <div >
       <div>
-      <Header username={location.state.name}></Header>
+      <Header username={location.state.name} profile={location.state.profileurl}></Header>
       </div>
       <div className="flex">
       <div className="text-left mt-12 ml-12  flex-1">

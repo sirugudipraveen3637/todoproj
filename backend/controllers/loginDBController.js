@@ -25,7 +25,8 @@ const login= async(req,res)=>
                     success:true,
                     message:"login successful",
                     id:usercheck._id,
-                    name:usercheck.name
+                    name:usercheck.name,
+                    profileurl:usercheck.profileurl,
                 })
             }
             else
